@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0 ,user-scalable=no">
+    <title>Video Demo</title>
+    <style type="text/css">
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+    .container {
+        max-width: 100%;
+        margin: 150px auto;
+        padding: 0 15px;
+    }
+
+    img {
+        width: 100%;
+    }
+
+    body {
+        padding: 0;
+        margin: 0;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.2;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    h2 {
+        color: #af3590;
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 43.42px;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+    }
+
+    h3 {
+        font-size: 20px;
+        margin-bottom: 18px;
+        line-height: 1.2;
+        color: #000;
+        font-weight: 700;
+    }
+
+    .video-row .video-column {
+        max-width: 33.33%;
+        flex: 0 0 33.33%;
+        padding: 0 15px;
+    }
+
+    .video-row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -15px;
+    }
+
+    /*Modal Css*/
+    body.modal-open {
+        overflow: hidden;
+        padding-right: 16px;
+    }
+
+    body.modal-open .custom-modal {
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    a{
+        display: block;
+    }
+
+    .custom-modal {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 99;
+        display: none;
+        overflow: hidden;
+        outline: 0;
+        padding: 25px 15px;
+    }
+
+    .custom-modal .modal-content-wrapper {
+        position: relative;
+        width: auto;
+        pointer-events: none;
+        max-width: 950px;
+        margin: 0 auto;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        min-height: 100%;
+        z-index: 9999;
+        transition: -webkit-transform .3s ease-out;
+        transition: transform .3s ease-out;
+        -webkit-transform: translate(0, -25%);
+        transform: translate(0, -25%);
+    }
+
+    .custom-modal.visible .modal-content-wrapper {
+        transform: translate(0);
+    }
+
+    .custom-modal .modal-content-wrapper .modal-inner-content {
+        position: relative;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        width: 100%;
+        pointer-events: auto;
+        background-color: #000;
+        background-clip: padding-box;
+        outline: 0;
+        border: 10px solid #fff;
+        transition: border 0.3s;
+    }
+
+    .modal-open .modal-backdrop {
+        opacity: 0.5;
+        visibility: visible;
+    }
+
+    .modal-backdrop {
+        background: #000;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        cursor: pointer;
+        opacity: 0;
+        transition: opacity .3s linear;
+        z-index: 999;
+        visibility: hidden;
+    }
+
+    .custom-modal .modal-content-wrapper .modal-inner-content .modal-header .modal-close {
+        height: 45px;
+        width: 45px;
+        cursor: pointer;
+        transition: all 0.3s;
+        opacity: 1;
+        padding: 14px;
+        border-radius: 100%;
+        background-color: #fff;
+        display: inline-flex;
+        z-index: 999;
+        position: absolute;
+        right: -25px;
+        top: -25px;
+    }
+    .custom-video-hover .modal-body,
+    .custom-modal .modal-content-wrapper .modal-inner-content .modal-body {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        background-color: #000;
+    }
+    .custom-video-hover .modal-body video,
+    .custom-video-hover .modal-body iframe,
+    .custom-modal .modal-content-wrapper .modal-inner-content .modal-body video:focus,
+    .custom-modal .modal-content-wrapper .modal-inner-content .modal-body iframe:focus {
+        outline: none;
+    }
+    .custom-video-hover .hover-video-link.active .modal-body .placeholder-block{
+        opacity: 0;
+        visibility: hidden;
+    }
+    .custom-video-hover .modal-body .placeholder-block{
+        z-index: 1;
+        position: relative;
+    }
+    .custom-video-hover .modal-body .placeholder-block,
+    .custom-video-hover .modal-body video,
+    .custom-video-hover .modal-body iframe,
+    .custom-modal .modal-content-wrapper .modal-inner-content .modal-body video,
+    .custom-modal .modal-content-wrapper .modal-inner-content .modal-body iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        bottom: 0;
+        right: 0;
+        border: none;
+        outline: none;
+        transition: all 0.3s;
+    }
+    /*Modal Css End*/
+    
+    .custom-video-hover{
+        margin-top: 60px;
+    }
+
+    @media(max-width: 767px){
+        .video-row .video-column{
+            max-width: 100%;
+            flex: 0 0 100%;
+            margin-bottom: 30px;
+        }
+    }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="custom-video-modal">
+            <div class="title-content">
+                <h2>Load Videos On Modal</h2>
+            </div>
+            <div class="video-row">
+                <div class="video-column yb-video">
+                    <h3>YouTube Video</h3>
+                    <a href="#" title="YouTube Video" class="video-link" data-link="iframe-video" data-src="https://www.youtube.com/embed/9xwazD5SyVg">
+                        <div class="video-block">
+                            <img src="images/video-placeholder.jpg" alt="Video Placeholder" />
+                        </div>
+                    </a>
+                </div>
+                <div class="video-column vimeo-video">
+                    <h3>Vimeo Video</h3>
+                    <a href="#" title="Vimeo Video" class="video-link" data-link="iframe-video" data-src="https://player.vimeo.com/video/58385453?badge=0">
+                        <div class="video-block">
+                            <img src="images/video-placeholder.jpg" alt="Video Placeholder" />
+                        </div>
+                    </a>
+                </div>
+                <div class="video-column html-video">
+                    <h3>HTML Video</h3>
+                    <a href="#" title="HTML Video" class="video-link" data-link="html-video" data-src="video/video.mp4">
+                        <div class="video-block">
+                            <img src="images/video-placeholder.jpg" alt="Video Placeholder" />
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="custom-video-hover">
+            <div class="title-content">
+                <h2>Load Videos On Mouse Hover</h2>
+            </div>
+            <div class="video-row">
+                <div class="video-column yb-video">
+                    <h3>YouTube Video</h3>
+                    <a href="#" title="YouTube Video" class="hover-video-link">
+                        <div class="modal-body">
+                            <div class="placeholder-block">
+                                <img src="images/video-placeholder.jpg" alt="Video Placeholder" />
+                            </div>
+                            <iframe src="https://www.youtube.com/embed/9xwazD5SyVg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"  allowfullscreen></iframe>
+                        </div>
+                    </a>
+                </div>
+                <div class="video-column vimeo-video">
+                    <h3>Vimeo Video</h3>
+                    <a href="#" title="Vimeo Video" class="hover-video-link">
+                        <div class="modal-body">
+                            <div class="placeholder-block">
+                                <img src="images/video-placeholder.jpg" alt="Video Placeholder" />
+                            </div>
+                            <iframe src="https://player.vimeo.com/video/58385453?badge=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"  allowfullscreen></iframe>
+                        </div>
+                    </a>
+                </div>
+                <div class="video-column html-video">
+                    <h3>HTML Video</h3>
+                    <a href="#" title="HTML Video" class="hover-video-link">
+                        <div class="modal-body">
+                            <div class="placeholder-block">
+                                <img src="images/video-placeholder.jpg" alt="Video Placeholder" />
+                            </div>
+                            <video controls>
+                                <source src="video/video.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery.js"></script>
+    <script src="js/general.js"></script>
+    <!-- modal for yb and vimeo -->
+    <div class="custom-modal" data-target="iframe-video">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content-wrapper">
+            <div class="modal-inner-content">
+                <div class="modal-header">
+                    <span class="modal-close" title="close"><img src="images/close-button.svg" alt="Close"></span>
+                </div>
+                <div class="modal-body">
+                    <iframe src="" id="video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal HTML video -->
+    <div class="custom-modal" data-target="html-video">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content-wrapper">
+            <div class="modal-inner-content">
+                <div class="modal-header">
+                    <span class="modal-close" title="close"><img src="images/close-button.svg" alt="Close"></span>
+                </div>
+                <div class="modal-body">
+                    <video controls autoplay id="video">
+                        <source src="" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
